@@ -21,7 +21,7 @@ const JobDetails = () => {
     <section className='flex flex-col gap-2.5 lg:pt-5'>
       <div className='flex flex-row-reverse items-center gap-2'>
         <Select>
-          <SelectTrigger className="w-[100px] text-green-600 border-none bg-transparent p-0 h-fit gap-2">
+          <SelectTrigger aria-label="Sort type" className="w-[100px] text-green-600 border-none bg-transparent p-0 h-fit gap-2">
             <SelectValue placeholder="Type" />
           </SelectTrigger>
           <SelectContent>
@@ -39,7 +39,7 @@ const JobDetails = () => {
         </div>
         <div className='flex gap-3'>
           <span>Set alert</span>
-          <Switch />
+          <Switch aria-label="Set alert" />
         </div>
       </div>
       {jobPost.map((item: IJobPost, index: number) => (
