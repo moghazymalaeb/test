@@ -28,8 +28,8 @@ const Navbar = () => {
               </span>
               <NavbarIcon icon={<MessageSquare />} title='Message' href='/' />
             </div>
-            <NavbarIcon icon={<Avatar className='w-6 h-6'>
-              <AvatarImage src="https://github.com/shadcn.png" />
+            <NavbarIcon icon={<Avatar className='w-6 h-6' aria-label="Profile">
+              <AvatarImage src="https://ui-avatars.com/api/?name=AR" alt='User profile avatar' />
               <AvatarFallback className='text-black'>AR</AvatarFallback>
             </Avatar>} title='Profile' />
           </div>
@@ -41,7 +41,7 @@ const Navbar = () => {
           <div className='flex items-center gap-6'>
             <div className="relative">
               <NavbarIcon icon={<Avatar className='w-12 h-12 md:w-6 md:h-6'>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src="https://ui-avatars.com/api/?name=AR" alt='User profile avatar' />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>} title='' href='/' />
               <span className='absolute bg-gray-600 flex items-center justify-center rounded-full -right-2 h-6 w-6 bottom-0'>

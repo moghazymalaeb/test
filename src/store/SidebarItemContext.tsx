@@ -32,7 +32,6 @@ const SidebarItemProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    console.log('useEffect triggered');
     startTransition(() => {
       fetchNavItems();
     });
