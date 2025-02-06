@@ -2,68 +2,53 @@
 
 import { ISidebarItem } from "@/types";
 import { revalidatePath } from "next/cache";
+import { get, post } from "./requests";
 
 export async function getNavItems() {
   try {
-    // const response = await fetch("https://ahmed-radi-daftra.koyeb.app/nav");
-    const response = await fetch("http://localhost:8081/nav");
+    const response = await get<ISidebarItem[]>("/nav");
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.data) {
+      throw new Error("Empty JSON response");
     }
 
-    const data = await response.json();
-
-    if (!data) {
-      throw new Error('Empty JSON response');
-    }
-
-    revalidatePath('/');
-    return data;
+    revalidatePath("/");
+    return response.data;
   } catch (error) {
     console.error("Failed to fetch navigation items:", error);
     throw error;
   }
 }
 
-export async function postTrackItem({ id, from, to }: { id: number, from: number, to: number }) {
-  // const response = await fetch("https://ahmed-radi-daftra.koyeb.app/track", {
-  const response = await fetch("http://localhost:8081/track", {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ id, from, to }),
-  });
+export async function postTrackItem({ id, from, to }: { id: number; from: number; to: number }) {
+  try {
+    const response = await post("/track", { id, from, to });
 
-  if (response.status === 204) {
-    return { message: 'No Content' };
-  } else {
-    return await response.json();
+    if (response.status === 204) {
+      return { message: "No Content" };
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed to post track item:", error);
+    throw error;
   }
 }
 
 export const postSidebarItems = async (items: ISidebarItem[]) => {
   try {
-    // const response = await fetch('https://ahmed-radi-daftra.koyeb.app/nav', {
-    const response = await fetch('http://localhost:8081/nav', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(items),
-    });
+    const response = await post("/nav", items);
 
     if (response.status === 204) {
       const updatedItems = await getNavItems();
-      console.log('Items successfully saved');
+      console.log("Items successfully saved");
       return updatedItems;
     } else {
-      console.error('Failed to save items', response.statusText);
+      console.error("Failed to save items", response.statusText);
       return null;
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
     return null;
   }
 };
